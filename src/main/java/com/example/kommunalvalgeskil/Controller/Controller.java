@@ -20,7 +20,7 @@ public class Controller {
     @Autowired
     MedlemRepo medlemRepo;
 
-    // Metode der henter alle kandidater fra backend
+    // Metode der henter alle kandidater fra backend.
     @GetMapping
     public ResponseEntity<List<Medlem>> findAll(){
         List<Medlem> medlemmer = new ArrayList<>();
