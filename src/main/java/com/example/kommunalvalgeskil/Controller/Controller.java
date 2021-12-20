@@ -19,12 +19,15 @@ public class Controller {
     @Autowired
     MedlemRepo medlemRepo;
 
+    // Metode der henter alle kandidater fra backend
     @GetMapping
     public ResponseEntity<List<Medlem>> findAll(){
         List<Medlem> medlemmer = new ArrayList<>();
         medlemRepo.findAll().forEach(medlemmer::add);
         return ResponseEntity.status(HttpStatus.OK).body(medlemmer);
     }
+
+    // Metoder der henter kandidater baseret på parti
     @GetMapping("/{parti}")
     public ResponseEntity<List<Medlem>> findAllByParti(@PathVariable String parti){
         List<Medlem> medlemmer = new ArrayList<>();
@@ -32,6 +35,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.OK).body(medlemmer);
     }
 
+    // Metode der henter en enkelt kandidat baseret på id
     @GetMapping("/find/{id}")
     public ResponseEntity<Optional<Medlem>>findById(@PathVariable Long id){
         Optional<Medlem> optionalMedlem = medlemRepo.findById(id);
@@ -42,6 +46,7 @@ public class Controller {
         }
     }
 
+    // Metode der skriver et medlem til databasen
     @PostMapping
     public ResponseEntity<Medlem> create(@RequestBody Medlem medlem) {
 
@@ -50,6 +55,7 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.CREATED).body(newMedlem);
     }
 
+    // Metode der opdaterer en entity i databasen
     @PutMapping("/{id}")
     public ResponseEntity<Medlem> edit(@RequestBody Medlem medlem, @PathVariable Long id) {
         Optional<Medlem> optionalMedlem = medlemRepo.findById(id);
@@ -61,7 +67,7 @@ public class Controller {
         }
     }
 
-
+    // Metode der sletter en entity fra databasen
     @DeleteMapping("/{id}")
     public ResponseEntity<Medlem> delete(@PathVariable Long id){
         Optional<Medlem> optionalMedlem = medlemRepo.findById(id);
