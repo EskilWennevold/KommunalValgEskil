@@ -27,13 +27,7 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
                 startAngle: 240,
                 yValueFormatString: "##0.00\"%\"",
                 indexLabel: "{label} {y}",
-                dataPoints: [
-                    {y:79.45, label: "Google"},
-                    {y: 7.31, label: "Bing"},
-                    {y: 7.06, label: "Baidu"},
-                    {y: 4.91, label: "Yahoo"},
-                    {y: 1.26, label: "Others"}
-                ]
+                dataPoints: coordArray
             }]
         });
         chart.render();
@@ -67,7 +61,14 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
             coordsArray.push(coord)
             sum = 0
         }
-        console.log(coordsArray)
+        return percentageArray(allVotes, coordsArray)
+
+    }
+    function percentageArray(allVotes,coordsArray){
+        coordsArray.forEach(c => {
+            c.y = Math.round(c.y/allVotes*100)
+        })
+        return coordsArray;
     }
     function getAllVotes(){
         let array = cache.getAll()
