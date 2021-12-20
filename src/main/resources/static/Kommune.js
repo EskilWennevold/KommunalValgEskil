@@ -1,7 +1,7 @@
 
 
 
-sessionStorage.setItem("SERVER_URL","api/kommunalvalg");
+sessionStorage.setItem("SERVER_URL","http://localhost:8080/api/kommunalvalg");
 const SERVER_URL = sessionStorage.getItem("SERVER_URL");
 
     // Metode der reagerer på click af knapper og aktivere andre metoder via callbacks

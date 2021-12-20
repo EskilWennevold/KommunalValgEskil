@@ -14,6 +14,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("api/kommunalvalg")
+@CrossOrigin(origins = "*")
 public class Controller {
 
     @Autowired
