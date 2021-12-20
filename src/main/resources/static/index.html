@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Kommunal Valg</title>
+    <!-- bootstrap Stylesheetet herunder er blevet vist til os af Lars og Jarl. -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+
+    <!-- bootstrap Scriptet herunder er blevet vist til os af Lars og det er også blevet brugt i en tidligere opgave-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+            integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h2 style="text-align: center">Ruderdals Kommune Valg</h2>
+<button type="button" class="btn btn-primary" id="btn-add-medlem">
+    Tilføj en Kandidat
+</button>
+<br>
+<label for="select-filter" class="form-label">Vælg det parti du ønsker at se kandidaterne fra:</label>
+<select id="select-filter">
+    <option value="Alle">Alle Partier</option>
+    <option value="Venstre">Venstre</option>
+    <option value="Socialdemokratiet">Socialdemokratiet</option>
+    <option value="Radikale Venstre">Radikale Venstre</option>
+    <option value="Det Konservative Folkeparti">Det Konservative Folkeparti</option>
+    <option value="Nye Borgerlige">Nye Borgerlige</option>
+    <option value="Socialistisk Folkeparti">Socialistisk Folkeparti</option>
+    <option value="Liberal Alliance">Liberal Alliance</option>
+    <option value="Lokallisten">Lokallisten</option>
+    <option value="Dansk Folkeparti">Dansk Folkeparti</option>
+    <option value="BorgerFokus">BorgerFokus</option>
+    <option value="Enhedslisten">Enhedslisten</option>
+</select>
+<br>
+<button type="button" class="btn btn-primary" id="btn-show-chart">
+    Vis Diagram over fordeling
+</button>
+
+<p id="add-error-msg" class="alert alert-danger" style="max-width: 50%;display: none;" role="alert"></p>
+<div style="margin-left: 150px; margin-top: 40px; margin-right: 150px">
+    <table class="table">
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Navn</th>
+            <th>Parti</th>
+            <th>Stemmer</th>
+            <th></th>
+            <th></th>
+        </tr>
+        </thead>
+        <tbody id="medlem-body">
+        </tbody>
+    </table>
+</div>
+
+
+<div class="modal fade" id="medlems-modal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">Tilføj Medlem</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <p>Kandidat ID: <span id="medlems-id"></span></p>
+                <form>
+                    <div class="mb-3">
+                        <label for="input-navn" class="form-label">Navn</label>
+                        <input type="text" class="form-control" id="input-navn">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-parti" class="form-label">Parti</label>
+                        <input type="text" class="form-control" id="input-parti">
+                    </div>
+                    <div class="mb-3">
+                        <label for="input-stemmer" class="form-label">Stemmer</label>
+                        <input type="nummer" class="form-control" id="input-stemmer">
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">cancel</button>
+                <button id="btn-save" type="button" class="btn btn-primary" data-bs-dismiss="modal">Save changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+<div id="chartContainer" style="height: 300px; width: 100%;"></div>
+</body>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+<script src="Kommune.js"></script>
+</html>
