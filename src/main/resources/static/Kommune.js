@@ -4,7 +4,7 @@
 sessionStorage.setItem("SERVER_URL","api/kommunalvalg");
 const SERVER_URL = sessionStorage.getItem("SERVER_URL");
 
-
+    // Metode der reagerer på click af knapper og aktivere andre metoder via callbacks
     function setUpClickEvents() {
         document.getElementById("medlem-body").onclick = handleTableClick
         document.getElementById("btn-save").onclick = saveMedlem
@@ -13,7 +13,7 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         document.getElementById("btn-show-chart").onclick = showChart
     }
 
-
+    // Metode der viser Chartet i bunden af index siden
     function showChart(){
         // Diagrammet og metoderne er taget fra https://canvasjs.com/html5-javascript-pie-chart/
         let coordArray = findCoords()
@@ -32,6 +32,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         });
         chart.render();
     }
+
+    // Metode der opstiller partierne i et enkelt array
     function findParties(){
         let array = cache.getAll()
         let myPartiSet = new Set();
@@ -41,6 +43,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         newArray = Array.from(myPartiSet)
         return newArray;
     }
+
+    // Metode der opstiller arrayet der skal indsættes i Chartet
     function findCoords(){
         let partiArray = findParties()
         let allVotes = getAllVotes()
@@ -64,12 +68,16 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         return percentageArray(allVotes, coordsArray)
 
     }
+
+    // Metode der finder procent delen af den samlede stemme sum
     function percentageArray(allVotes,coordsArray){
         coordsArray.forEach(c => {
             c.y = Math.round(c.y/allVotes*100)
         })
         return coordsArray;
     }
+
+    // Finder summen af alle stemmerne
     function getAllVotes(){
         let array = cache.getAll()
         let sum = 0;
@@ -78,6 +86,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         }
         return sum;
     }
+
+    // Finder Kandidater via parti
     function filterByParti(){
         let value = document.getElementById("select-filter").value;
 
@@ -100,6 +110,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
                 document.getElementById("medlem-body").innerHTML = rows.join("")
         }
     }
+
+    // Oprettet et nyt medlems objekt
     function makeNewMedlem() {
         showModal({
             id: null,
@@ -108,6 +120,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
             stemmer: ""
         })
     }
+
+    // Gemmer et nyt medlem til backenden og cache
     function saveMedlem() {
         const medlem = {}
         medlem.id = Number(document.getElementById("medlems-id").innerText)
@@ -138,7 +152,10 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
             })
             .catch(e => alert(e))
     }
+
     setUpClickEvents()
+
+    // Sletter en Entity fra Backend og frontend eller finder den entity der skal redigeres
     function handleTableClick(event){
         event.preventDefault()
         event.stopPropagation()
@@ -164,7 +181,11 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
             let medlemEdit = cache.findById(idToEdit)
             showModal(medlemEdit)
         }
+
+
     }
+
+    // Metode der indsætter Entitetens værdier på modalen.
     function showModal(medlem) {
         const myModal = new bootstrap.Modal(document.getElementById('medlems-modal'))
         document.getElementById("modal-title").innerText = medlem.id ? "Rediger Medlem" : "Tilføj Medlem"
@@ -174,6 +195,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
         document.getElementById("input-stemmer").value = medlem.stemmer
         myModal.show()
     }
+
+    // Metode der opretter cachen med alle dens metoder.
     function Cache() {
         let medlemmer = []
         const addEdit = (medlem, method) => {
@@ -191,6 +214,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
             addEdit: addEdit
         }
     }
+
+    // Metode der fetcher alle kandidaterne fra backend og indsætter det i cachen
     function fetchMedlemmer(){
         fetch(SERVER_URL)
             .then(res => res.json())
@@ -199,6 +224,8 @@ const SERVER_URL = sessionStorage.getItem("SERVER_URL");
                 makeRows()
             })
     }
+
+    // Metode der laver rækkerne i index siden.
     function makeRows(){
         let medlemmer = cache.getAll()
         let rows = medlemmer.map(m =>`
